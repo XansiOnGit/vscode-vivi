@@ -1,0 +1,193 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "Vivi Script",
+  "scopeName": "source.vivi",
+  "patterns": [
+    {
+      "include": "#comments"
+    },
+    {
+      "include": "#directives"
+    },
+    {
+      "include": "#strings"
+    },
+    {
+      "include": "#keywords"
+    },
+    {
+      "include": "#types"
+    },
+    {
+      "include": "#builtins"
+    },
+    {
+      "include": "#numbers"
+    },
+    {
+      "include": "#operators"
+    },
+    {
+      "include": "#functions"
+    }
+  ],
+  "repository": {
+    "comments": {
+      "patterns": [
+        {
+          "name": "comment.block.vivi",
+          "begin": "/\\*",
+          "end": "\\*/"
+        },
+        {
+          "name": "comment.line.double-slash.vivi",
+          "match": "//.*$"
+        },
+        {
+          "name": "comment.line.semicolon.vivi",
+          "match": ";;.*$"
+        },
+        {
+          "name": "comment.line.number-sign.vivi",
+          "match": "#(?!proctime|import|interop).*$"
+        }
+      ]
+    },
+    "directives": {
+      "patterns": [
+        {
+          "name": "keyword.control.directive.vivi",
+          "match": "#(proctime|import|interop)\\b"
+        }
+      ]
+    },
+    "strings": {
+      "patterns": [
+        {
+          "name": "string.quoted.double.vivi",
+          "begin": "\"",
+          "end": "\"",
+          "patterns": [
+            {
+              "name": "constant.character.escape.vivi",
+              "match": "\\\\."
+            },
+            {
+              "include": "#interpolation"
+            }
+          ]
+        }
+      ]
+    },
+    "interpolation": {
+      "name": "meta.embedded.line.vivi",
+      "begin": "\\{",
+      "end": "\\}",
+      "patterns": [
+        {
+          "include": "$self"
+        }
+      ]
+    },
+    "keywords": {
+      "patterns": [
+        {
+          "name": "keyword.control.vivi",
+          "match": "\\b(if|else|while|for|in|switch|default|try|catch|break|continue|return|defer|exit|as)\\b"
+        },
+        {
+          "name": "keyword.operator.logical.word.vivi",
+          "match": "\\b(and|or|not)\\b"
+        },
+        {
+          "name": "keyword.declaration.vivi",
+          "match": "\\b(fn|struct|enum)\\b"
+        },
+        {
+          "name": "variable.language.self.vivi",
+          "match": "\\b(self)\\b"
+        }
+      ]
+    },
+    "types": {
+      "patterns": [
+        {
+          "name": "support.type.builtin.vivi",
+          "match": "\\b(rune|string|bool|i16|i32|i64|u16|u32|u64|f16|f32|f64|ext)\\b"
+        },
+        {
+          "name": "constant.language.null.vivi",
+          "match": "\\b(null)\\b"
+        },
+        {
+          "name": "constant.language.boolean.vivi",
+          "match": "\\b(true|false)\\b"
+        }
+      ]
+    },
+    "builtins": {
+      "patterns": [
+        {
+          "name": "support.function.builtin.vivi",
+          "match": "\\b(print|panic|type_of|kind_of|type_name|fields|methods|param|return_type|has_field|has_method|has_function|has_type|has_symbol|is_type|is_exported|symbols|functions|types|constants|imports|emit|eval)\\b(?=\\s*\\()"
+        }
+      ]
+    },
+    "numbers": {
+      "patterns": [
+        {
+          "name": "constant.numeric.float.vivi",
+          "match": "\\b\\d+\\.\\d+\\b"
+        },
+        {
+          "name": "constant.numeric.integer.vivi",
+          "match": "\\b\\d+\\b"
+        }
+      ]
+    },
+    "operators": {
+      "patterns": [
+        {
+          "name": "keyword.operator.declaration.vivi",
+          "match": "(::|:=)"
+        },
+        {
+          "name": "keyword.operator.comparison.vivi",
+          "match": "(==|!=|<=|>=|<|>)"
+        },
+        {
+          "name": "keyword.operator.logical.vivi",
+          "match": "(&&|\\|\\||!)"
+        },
+        {
+          "name": "keyword.operator.math.vivi",
+          "match": "(\\+|-|\\*|/|%|\\+\\+|--|\\+=|-=|\\*=|/=)"
+        },
+        {
+          "name": "keyword.operator.slice.vivi",
+          "match": "\\.\\."
+        },
+        {
+          "name": "keyword.operator.misc.vivi",
+          "match": "(\\?|:|\\||~|\\.)"
+        },
+        {
+          "name": "keyword.operator.assignment.vivi",
+          "match": "="
+        }
+      ]
+    },
+    "functions": {
+      "patterns": [
+        {
+          "match": "\\b([a-zA-Z_][a-zA-Z0-9_]*)\\s*(?=\\()",
+          "captures": {
+            "1": {
+              "name": "entity.name.function.vivi"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

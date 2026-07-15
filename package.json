@@ -1,0 +1,25 @@
+{
+  "name": "vivi",
+  "displayName": "vivi",
+  "description": "Vivi Script",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.125.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [{
+      "id": "vivi",
+      "aliases": ["Vivi Script", "vivi"],
+      "extensions": [".vivi"],
+      "configuration": "./language-configuration.json"
+    }],
+    "grammars": [{
+      "language": "vivi",
+      "scopeName": "source.vivi",
+      "path": "./syntaxes/vivi.tmLanguage.json"
+    }]
+  }
+}
