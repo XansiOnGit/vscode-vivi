@@ -1,6 +1,8 @@
 {
   "name": "vivi",
   "displayName": "vivi",
+  "publisher": "JulianKylander",
+  "repository": "https://github.com/jkylander/vscode-vivi",
   "description": "Vivi Script",
   "version": "0.0.1",
   "engines": {
