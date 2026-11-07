@@ -4,7 +4,8 @@
   "publisher": "JulianKylander",
   "repository": "https://github.com/jkylander/vscode-vivi",
   "description": "Vivi Script",
-  "version": "0.0.1",
+  "version": "0.0.5",
+  "icon": "icons/vivi-dark.png",
   "engines": {
     "vscode": "^1.125.0"
   },
@@ -12,12 +13,16 @@
     "Programming Languages"
   ],
   "contributes": {
-    "languages": [{
-      "id": "vivi",
-      "aliases": ["Vivi Script", "vivi"],
-      "extensions": [".vivi"],
-      "configuration": "./language-configuration.json"
-    }],
+  "languages": [{
+    "id": "vivi",
+    "aliases": ["Vivi Script", "vivi"],
+    "extensions": [".vivi"],
+    "configuration": "./language-configuration.json",
+    "icon": {
+      "light": "./icons/vivi-light.png",
+      "dark": "./icons/vivi-dark.png"
+    }
+  }],
     "grammars": [{
       "language": "vivi",
       "scopeName": "source.vivi",

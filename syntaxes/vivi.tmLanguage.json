@@ -139,27 +139,27 @@
           "match": "\\b(malloc|free|memcpy|timestamp|traceback|rand|seed|hash|cast)\\b(?=\\s*\\()"
         },
         {
-          "comment": "Io",
+          "comment": "Io library include for regular file handling, stdout and stderr",
           "name": "support.function.library.vivi",
           "match": "\\b(rgb|clear_screen|clear_line|cursor_to|cursor_hide|cursor_show|input|read_line|println|printf|eprint|eprintln|eprintf|file_exists|file_lines|file_read|file_write|file_append)\\b(?=\\s*\\()"
         },
         {
-          "comment": "Sys",
+          "comment": "Sys library include for commands and os functionality with cmd",
           "name": "support.function.library.vivi",
           "match": "\\b(run|capture|feed|pipe|redirect)\\b(?=\\s*\\()"
         },
         {
-          "comment": "Math",
+          "comment": "Math library include for advanced math",
           "name": "support.function.library.vivi",
           "match": "\\b(abs|min|max|clamp|lerp|sign|copysign|trunc|ceil|round|fmod|modf|sqrt|exp|log|log10|expm1|cbrt|hypot|pow|sin|cos|atan|atan2|asin|acos|sinh|cosh|tanh|acosh|deg_to_rad|rad_to_deg|gcd|lcm|factorial|gamma|erf|erfc)\\b(?=\\s*\\()"
         },
         {
-          "comment": "Time",
+          "comment": "Time library include for using and getting time",
           "name": "support.function.library.vivi",
           "match": "\\b(now|dt|dateTime|getTime|getDay|getMonth|getYear|formatDate)\\b(?=\\s*\\()"
         },
         {
-          "comment": "Strings",
+          "comment": "Strings library include for string control",
           "name": "support.function.library.vivi",
           "match": "\\b(index_of|is_digit|has_prefix|has_suffix|contains|substring|split|join|replace|trim|to_upper|to_lower|reverse|to_pascal_case|to_camel_case|to_snake_case)\\b(?=\\s*\\()"
         }
