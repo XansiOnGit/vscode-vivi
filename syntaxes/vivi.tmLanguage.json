@@ -3,89 +3,90 @@
   "name": "Vivi Script",
   "scopeName": "source.vivi",
   "patterns": [
-    {
-      "include": "#comments"
-    },
-    {
-      "include": "#directives"
-    },
-    {
-      "include": "#strings"
-    },
-    {
-      "include": "#keywords"
-    },
-    {
-      "include": "#types"
-    },
-    {
-      "include": "#builtins"
-    },
-    {
-      "include": "#numbers"
-    },
-    {
-      "include": "#operators"
-    },
-    {
-      "include": "#functions"
-    }
+    { "include": "#comments" },
+    { "include": "#import-line" },
+    { "include": "#directives" },
+    { "include": "#strings" },
+    { "include": "#runes" },
+    { "include": "#numbers" },
+    { "include": "#function-decl" },
+    { "include": "#keywords" },
+    { "include": "#types" },
+    { "include": "#constants-math" },
+    { "include": "#self" },
+    { "include": "#enum-member" },
+    { "include": "#namespace" },
+    { "include": "#method-call" },
+    { "include": "#property" },
+    { "include": "#builtins" },
+    { "include": "#stdlib" },
+    { "include": "#functions" },
+    { "include": "#constant-upper" },
+    { "include": "#types-user" },
+    { "include": "#operators" },
+    { "include": "#punctuation" }
   ],
   "repository": {
     "comments": {
       "patterns": [
-        {
-          "name": "comment.block.vivi",
-          "begin": "/\\*",
-          "end": "\\*/"
-        },
-        {
-          "name": "comment.line.double-slash.vivi",
-          "match": "//.*$"
-        },
-        {
-          "name": "comment.line.semicolon.vivi",
-          "match": ";;.*$"
-        },
-        {
-          "name": "comment.line.number-sign.vivi",
-          "match": "#(?!proctime|import|interop).*$"
-        }
+        { "name": "comment.block.vivi", "begin": "/\\*", "end": "\\*/" },
+        { "name": "comment.line.double-slash.vivi", "match": "//.*$" },
+        { "name": "comment.line.semicolon.vivi", "match": ";;.*$" },
+        { "name": "comment.line.number-sign.vivi", "match": "#(?!(proctime|import|interop|method|phrase)\\b).*$" }
       ]
+    },
+    "import-line": {
+      "match": "(#import)\\s+(\"[^\"]*\")(?:\\s+(as)\\s+([A-Za-z_]\\w*))?",
+      "captures": {
+        "1": { "name": "keyword.control.directive.vivi" },
+        "2": { "name": "string.quoted.double.module.vivi" },
+        "3": { "name": "keyword.control.as.vivi" },
+        "4": { "name": "entity.name.namespace.vivi" }
+      }
     },
     "directives": {
-      "patterns": [
-        {
-          "name": "keyword.control.directive.vivi",
-          "match": "#(proctime|import|interop)\\b"
-        }
-      ]
+      "name": "keyword.control.directive.vivi",
+      "match": "#(proctime|import|interop|method|phrase)\\b"
     },
     "strings": {
+      "name": "string.quoted.double.vivi",
+      "begin": "\"",
+      "end": "\"",
       "patterns": [
-        {
-          "name": "string.quoted.double.vivi",
-          "begin": "\"",
-          "end": "\"",
-          "patterns": [
-            {
-              "name": "constant.character.escape.vivi",
-              "match": "\\\\."
-            },
-            {
-              "include": "#interpolation"
-            }
-          ]
-        }
+        { "name": "constant.character.escape.vivi", "match": "\\\\." },
+        { "name": "constant.other.placeholder.vivi", "match": "%[xdsfcu%]" },
+        { "include": "#interpolation" }
       ]
     },
     "interpolation": {
       "name": "meta.embedded.line.vivi",
       "begin": "\\{",
       "end": "\\}",
+      "beginCaptures": { "0": { "name": "punctuation.section.interpolation.begin.vivi" } },
+      "endCaptures": { "0": { "name": "punctuation.section.interpolation.end.vivi" } },
+      "patterns": [{ "include": "$self" }]
+    },
+    "runes": {
+      "name": "string.quoted.single.rune.vivi",
+      "match": "'(?:\\\\.|[^'\\\\])'"
+    },
+    "numbers": {
+      "patterns": [
+        { "name": "constant.numeric.hex.vivi", "match": "\\b0[xX][0-9a-fA-F_]+\\b" },
+        { "name": "constant.numeric.binary.vivi", "match": "\\b0[bB][01_]+\\b" },
+        { "name": "constant.numeric.float.vivi", "match": "\\b\\d[\\d_]*\\.\\d[\\d_]*(?:[eE][+-]?\\d+)?\\b" },
+        { "name": "constant.numeric.integer.vivi", "match": "\\b\\d[\\d_]*\\b" }
+      ]
+    },
+    "function-decl": {
       "patterns": [
         {
-          "include": "$self"
+          "match": "\\b([A-Za-z_]\\w*)\\s*(?=(?:::|:=)\\s*\\()",
+          "captures": { "1": { "name": "entity.name.function.declaration.vivi" } }
+        },
+        {
+          "match": "\\b([A-Za-z_]\\w*)(?=\\s*:\\s*\\([\\w\\s,.:=\\[\\]|*]*\\)\\s*\\{)",
+          "captures": { "1": { "name": "entity.name.function.declaration.vivi" } }
         }
       ]
     },
@@ -93,7 +94,7 @@
       "patterns": [
         {
           "name": "keyword.control.vivi",
-          "match": "\\b(if|else|while|for|in|switch|default|try|catch|break|continue|return|defer|exit|as)\\b"
+          "match": "\\b(if|else|while|for|in|switch|default|try|catch|break|continue|return|fallthrough|defer|exit|as)\\b"
         },
         {
           "name": "keyword.operator.logical.word.vivi",
@@ -101,11 +102,7 @@
         },
         {
           "name": "keyword.declaration.vivi",
-          "match": "\\b(fn|struct|enum)\\b"
-        },
-        {
-          "name": "variable.language.self.vivi",
-          "match": "\\b(self)\\b"
+          "match": "\\b(fn|struct|enum|local|static)\\b"
         }
       ]
     },
@@ -113,80 +110,121 @@
       "patterns": [
         {
           "name": "support.type.builtin.vivi",
-          "match": "\\b(rune|string|bool|i16|i32|i64|u16|u32|u64|f16|f32|f64|ext)\\b"
+          "match": "\\b(rune|string|bool|int|float|void|i8|i16|i32|i64|u8|u16|u32|u64|f16|f32|f64)\\b"
         },
         {
-          "name": "constant.language.null.vivi",
-          "match": "\\b(null)\\b"
+          "name": "keyword.declaration.vivi",
+          "match": "\\b(ext)\\b"
         },
-        {
-          "name": "constant.language.boolean.vivi",
-          "match": "\\b(true|false)\\b"
-        }
+        { "name": "constant.language.null.vivi", "match": "\\b(null)\\b" },
+        { "name": "constant.language.boolean.vivi", "match": "\\b(true|false)\\b" }
       ]
+    },
+    "constants-math": {
+      "name": "support.constant.math.vivi",
+      "match": "(?<!\\.)\\b(pi|e|tau|inf|nan|epsilon|ln2|ln10)\\b(?!\\s*(?:::|:=|\\())"
+    },
+    "self": {
+      "name": "variable.language.self.vivi",
+      "match": "\\b(self|argc|argv)\\b"
+    },
+    "enum-member": {
+      "name": "variable.other.enummember.vivi",
+      "match": "(?<=\\.)[A-Z]\\w*"
+    },
+    "namespace": {
+      "match": "\\b(clock)(?=\\.)",
+      "captures": { "1": { "name": "entity.name.namespace.vivi" } }
+    },
+    "method-call": {
+      "match": "(?<=\\.)([A-Za-z_]\\w*)(?=\\s*\\()",
+      "captures": { "1": { "name": "entity.name.function.method.vivi" } }
+    },
+    "property": {
+      "name": "variable.other.property.vivi",
+      "match": "(?<=\\.)[a-z_]\\w*"
     },
     "builtins": {
       "patterns": [
         {
+          "comment": "Raw C builtins (src/builtins.c). Callable only, never usable as values.",
+          "name": "support.function.builtin.vivi",
+          "match": "\\b(_write|_exit|_traceback|_clock|_rand|_len|_get|_set|_trunc|_cast|_read|_open|_close|_run|_seed|_pipe|_spawn|_wait|_mmap|_munmap|_peek|_poke|_memcpy)\\b(?=\\s*\\()"
+        },
+        {
+          "comment": "Reflection / compile-time builtins",
           "name": "support.function.builtin.vivi",
           "match": "\\b(print|panic|type_of|kind_of|type_name|fields|methods|param|return_type|has_field|has_method|has_function|has_type|has_symbol|is_type|is_exported|symbols|functions|types|constants|imports|emit|eval)\\b(?=\\s*\\()"
         }
       ]
     },
-    "numbers": {
+    "stdlib": {
       "patterns": [
         {
-          "name": "constant.numeric.float.vivi",
-          "match": "\\b\\d+\\.\\d+\\b"
+          "comment": "_base.vivi (auto-included)",
+          "name": "support.function.library.vivi",
+          "match": "\\b(malloc|free|memcpy|timestamp|traceback|rand|seed|hash|cast)\\b(?=\\s*\\()"
         },
         {
-          "name": "constant.numeric.integer.vivi",
-          "match": "\\b\\d+\\b"
-        }
-      ]
-    },
-    "operators": {
-      "patterns": [
-        {
-          "name": "keyword.operator.declaration.vivi",
-          "match": "(::|:=)"
+          "comment": "Io library: files, stdout/stderr, ANSI helpers",
+          "name": "support.function.library.vivi",
+          "match": "\\b(rgb|bold|dim|italic|underline|inverse|red|green|blue|yellow|cyan|bg_red|bg_green|clear_screen|clear_line|cursor_to|cursor_hide|cursor_show|input|read_line|println|printf|eprint|eprintln|eprintf|file_exists|file_lines|file_read|file_write|file_append)\\b(?=\\s*\\()"
         },
         {
-          "name": "keyword.operator.comparison.vivi",
-          "match": "(==|!=|<=|>=|<|>)"
+          "comment": "Sys library",
+          "name": "support.function.library.vivi",
+          "match": "\\b(run|capture|feed|pipe|redirect)\\b(?=\\s*\\()"
         },
         {
-          "name": "keyword.operator.logical.vivi",
-          "match": "(&&|\\|\\||!)"
+          "comment": "Math library",
+          "name": "support.function.library.vivi",
+          "match": "\\b(abs|min|max|clamp|lerp|sign|copysign|trunc|floor|ceil|round|fmod|modf|sqrt|exp|log|log10|log2|expm1|cbrt|hypot|pow|sin|cos|tan|atan|atan2|asin|acos|sinh|cosh|tanh|asinh|acosh|atanh|deg_to_rad|rad_to_deg|gcd|lcm|factorial|gamma|erf|erfc)\\b(?=\\s*\\()"
         },
         {
-          "name": "keyword.operator.math.vivi",
-          "match": "(\\+|-|\\*|/|%|\\+\\+|--|\\+=|-=|\\*=|/=)"
+          "comment": "Time library",
+          "name": "support.function.library.vivi",
+          "match": "\\b(now|dt|dateTime|getTime|getDay|getMonth|getYear|formatDate)\\b(?=\\s*\\()"
         },
         {
-          "name": "keyword.operator.slice.vivi",
-          "match": "\\.\\."
-        },
-        {
-          "name": "keyword.operator.misc.vivi",
-          "match": "(\\?|:|\\||~|\\.)"
-        },
-        {
-          "name": "keyword.operator.assignment.vivi",
-          "match": "="
+          "comment": "Strings library",
+          "name": "support.function.library.vivi",
+          "match": "\\b(index_of|is_digit|has_prefix|has_suffix|contains|substring|split|join|replace|trim|to_upper|to_lower|reverse|to_pascal_case|to_camel_case|to_snake_case)\\b(?=\\s*\\()"
         }
       ]
     },
     "functions": {
+      "match": "\\b([A-Za-z_]\\w*)\\s*(?=\\()",
+      "captures": { "1": { "name": "entity.name.function.call.vivi" } }
+    },
+    "constant-upper": {
+      "name": "constant.other.vivi",
+      "match": "\\b[A-Z][A-Z0-9_]*\\b"
+    },
+    "types-user": {
+      "name": "entity.name.type.vivi",
+      "match": "\\b[A-Z][A-Za-z0-9_]*\\b"
+    },
+    "operators": {
       "patterns": [
-        {
-          "match": "\\b([a-zA-Z_][a-zA-Z0-9_]*)\\s*(?=\\()",
-          "captures": {
-            "1": {
-              "name": "entity.name.function.vivi"
-            }
-          }
-        }
+        { "name": "keyword.operator.declaration.vivi", "match": "::|:=" },
+        { "name": "keyword.operator.variadic.vivi", "match": "\\.\\.\\." },
+        { "name": "keyword.operator.slice.vivi", "match": "\\.\\." },
+        { "name": "keyword.operator.assignment.compound.vivi", "match": "\\+=|-=|\\*=|/=|%=" },
+        { "name": "keyword.operator.increment.vivi", "match": "\\+\\+|--" },
+        { "name": "keyword.operator.comparison.vivi", "match": "==|!=|<=|>=|<(?!<)|>(?!>)" },
+        { "name": "keyword.operator.logical.vivi", "match": "&&|\\|\\||!" },
+        { "name": "keyword.operator.bitwise.vivi", "match": "<<|>>|&|\\^|\\|" },
+        { "name": "keyword.operator.concat.vivi", "match": "~" },
+        { "name": "keyword.operator.ternary.vivi", "match": "\\?|:" },
+        { "name": "keyword.operator.math.vivi", "match": "[+\\-*/%]" },
+        { "name": "keyword.operator.assignment.vivi", "match": "=" }
+      ]
+    },
+    "punctuation": {
+      "patterns": [
+        { "name": "punctuation.separator.comma.vivi", "match": "," },
+        { "name": "punctuation.terminator.statement.vivi", "match": ";" },
+        { "name": "punctuation.accessor.vivi", "match": "\\." }
       ]
     }
   }

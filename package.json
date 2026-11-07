@@ -1,27 +1,321 @@
 {
   "name": "vivi",
   "displayName": "vivi",
-  "publisher": "JulianKylander",
+  "publisher": "JulianKylander, Xansidev",
   "repository": "https://github.com/jkylander/vscode-vivi",
   "description": "Vivi Script",
-  "version": "0.0.1",
+  "version": "0.0.6",
+  "icon": "icons/vivi-dark.png",
   "engines": {
     "vscode": "^1.125.0"
   },
   "categories": [
     "Programming Languages"
   ],
+  "main": "./extension.js",
+  "activationEvents": [
+    "onLanguage:vivi"
+  ],
   "contributes": {
-    "languages": [{
-      "id": "vivi",
-      "aliases": ["Vivi Script", "vivi"],
-      "extensions": [".vivi"],
-      "configuration": "./language-configuration.json"
-    }],
-    "grammars": [{
-      "language": "vivi",
-      "scopeName": "source.vivi",
-      "path": "./syntaxes/vivi.tmLanguage.json"
-    }]
+    "languages": [
+      {
+        "id": "vivi",
+        "aliases": [
+          "Vivi Script",
+          "vivi"
+        ],
+        "extensions": [
+          ".vivi"
+        ],
+        "configuration": "./language-configuration.json",
+        "icon": {
+          "light": "./icons/vivi-light.png",
+          "dark": "./icons/vivi-dark.png"
+        }
+      }
+    ],
+    "grammars": [
+      {
+        "language": "vivi",
+        "scopeName": "source.vivi",
+        "path": "./syntaxes/vivi.tmLanguage.json"
+      }
+    ],
+    "configuration": {
+      "title": "Vivi",
+      "properties": {
+        "vivi.extraModules": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "description": "Extra module names to offer when completing #import \"...\"."
+        }
+      }
+    },
+    "configurationDefaults": {
+      "[vivi]": {
+        "editor.quickSuggestions": {
+          "other": true,
+          "comments": false,
+          "strings": true
+        },
+        "editor.suggest.snippetsPreventQuickSuggestions": false,
+        "editor.semanticHighlighting.enabled": false,
+        "editor.tokenColorCustomizations": {
+          "textMateRules": [
+            {
+              "scope": [
+                "comment",
+                "comment.line",
+                "comment.block"
+              ],
+              "settings": {
+                "foreground": "#7F848E",
+                "fontStyle": "italic"
+              }
+            },
+            {
+              "scope": [
+                "keyword.control.directive.vivi",
+                "keyword.control.import.directive.vivi"
+              ],
+              "settings": {
+                "foreground": "#FF7AB2",
+                "fontStyle": "bold"
+              }
+            },
+            {
+              "scope": [
+                "keyword.control.vivi",
+                "keyword.control.as.vivi"
+              ],
+              "settings": {
+                "foreground": "#C678DD"
+              }
+            },
+            {
+              "scope": [
+                "keyword.declaration.vivi"
+              ],
+              "settings": {
+                "foreground": "#C678DD",
+                "fontStyle": "bold"
+              }
+            },
+            {
+              "scope": [
+                "keyword.operator.word.vivi"
+              ],
+              "settings": {
+                "foreground": "#C678DD",
+                "fontStyle": "italic"
+              }
+            },
+            {
+              "scope": [
+                "entity.name.function.declaration.vivi"
+              ],
+              "settings": {
+                "foreground": "#FF9E3B",
+                "fontStyle": "bold"
+              }
+            },
+            {
+              "scope": [
+                "entity.name.function.call.vivi"
+              ],
+              "settings": {
+                "foreground": "#FFB86C"
+              }
+            },
+            {
+              "scope": [
+                "entity.name.function.method.vivi"
+              ],
+              "settings": {
+                "foreground": "#F78C6C"
+              }
+            },
+            {
+              "scope": [
+                "support.function.library.vivi"
+              ],
+              "settings": {
+                "foreground": "#61AFEF"
+              }
+            },
+            {
+              "scope": [
+                "support.type.builtin.vivi"
+              ],
+              "settings": {
+                "foreground": "#E5C07B"
+              }
+            },
+            {
+              "scope": [
+                "entity.name.type.vivi"
+              ],
+              "settings": {
+                "foreground": "#4EC9B0",
+                "fontStyle": "bold"
+              }
+            },
+            {
+              "scope": [
+                "entity.name.namespace.vivi"
+              ],
+              "settings": {
+                "foreground": "#FFD866",
+                "fontStyle": "italic"
+              }
+            },
+            {
+              "scope": [
+                "constant.language"
+              ],
+              "settings": {
+                "foreground": "#56B6C2",
+                "fontStyle": "bold"
+              }
+            },
+            {
+              "scope": [
+                "constant.other.vivi",
+                "support.constant.math.vivi"
+              ],
+              "settings": {
+                "foreground": "#FFCB6B",
+                "fontStyle": "bold"
+              }
+            },
+            {
+              "scope": [
+                "variable.other.enummember.vivi"
+              ],
+              "settings": {
+                "foreground": "#89DDFF"
+              }
+            },
+            {
+              "scope": [
+                "variable.language.self.vivi"
+              ],
+              "settings": {
+                "foreground": "#FF6188",
+                "fontStyle": "italic"
+              }
+            },
+            {
+              "scope": [
+                "variable.other.property.vivi"
+              ],
+              "settings": {
+                "foreground": "#E06C75"
+              }
+            },
+            {
+              "scope": [
+                "variable.other.interpolated.vivi"
+              ],
+              "settings": {
+                "foreground": "#E06C75"
+              }
+            },
+            {
+              "scope": [
+                "constant.numeric"
+              ],
+              "settings": {
+                "foreground": "#D19A66"
+              }
+            },
+            {
+              "scope": [
+                "string.quoted.double.vivi",
+                "string.quoted.double.module.vivi"
+              ],
+              "settings": {
+                "foreground": "#98C379"
+              }
+            },
+            {
+              "scope": [
+                "string.quoted.single.rune.vivi"
+              ],
+              "settings": {
+                "foreground": "#B5E890"
+              }
+            },
+            {
+              "scope": [
+                "constant.character.escape.vivi",
+                "constant.other.placeholder.vivi"
+              ],
+              "settings": {
+                "foreground": "#56B6C2"
+              }
+            },
+            {
+              "scope": [
+                "punctuation.section.interpolation.begin.vivi",
+                "punctuation.section.interpolation.end.vivi"
+              ],
+              "settings": {
+                "foreground": "#FF9E3B",
+                "fontStyle": "bold"
+              }
+            },
+            {
+              "scope": [
+                "keyword.operator.declaration.vivi"
+              ],
+              "settings": {
+                "foreground": "#FF9E3B",
+                "fontStyle": "bold"
+              }
+            },
+            {
+              "scope": [
+                "keyword.operator"
+              ],
+              "settings": {
+                "foreground": "#89DDFF"
+              }
+            },
+            {
+              "scope": [
+                "punctuation.separator.comma.vivi",
+                "punctuation.terminator.statement.vivi",
+                "punctuation.accessor.vivi"
+              ],
+              "settings": {
+                "foreground": "#9AA5B1"
+              }
+            },
+            {
+              "scope": [
+                "support.function.builtin.vivi"
+              ],
+              "settings": {
+                "foreground": "#B392F0",
+                "fontStyle": "italic"
+              }
+            },
+            {
+              "scope": [
+                "keyword.operator.ternary.vivi",
+                "keyword.operator.concat.vivi"
+              ],
+              "settings": {
+                "foreground": "#FF9E3B"
+              }
+            }
+          ]
+        }
+      }
+    }
   }
 }
