@@ -121,8 +121,18 @@
       ]
     },
     "constants-math": {
-      "name": "support.constant.math.vivi",
-      "match": "(?<!\\.)\\b(pi|e|tau|inf|nan|epsilon|ln2|ln10)\\b(?!\\s*(?:::|:=|\\())"
+      "patterns": [
+        {
+          "comment": "Math constants",
+          "name": "support.constant.math.vivi",
+          "match": "(?<!\\.)\\b(pi|e|phi|tau|inf|nan|epsilon|ln2|ln10)\\b(?!\\s*(?:::|:=|\\())"
+        },
+        {
+          "comment": "File descriptors",
+          "name": "support.constant.vivi",
+          "match": "(?<!\\.)\\b(stdout|stderr)\\b(?!\\s*(?:::|:=))"
+        }
+      ]
     },
     "self": {
       "name": "variable.language.self.vivi",
@@ -154,7 +164,7 @@
         {
           "comment": "Reflection / compile-time builtins",
           "name": "support.function.builtin.vivi",
-          "match": "\\b(print|panic|type_of|kind_of|type_name|fields|methods|param|return_type|has_field|has_method|has_function|has_type|has_symbol|is_type|is_exported|symbols|functions|types|constants|imports|emit|eval)\\b(?=\\s*\\()"
+          "match": "\\b(print|fprint|panic|type_of|kind_of|type_name|fields|methods|param|return_type|has_field|has_method|has_function|has_type|has_symbol|is_type|is_exported|symbols|functions|types|constants|imports|emit|eval)\\b(?=\\s*\\()"
         }
       ]
     },
@@ -163,12 +173,12 @@
         {
           "comment": "_base.vivi (auto-included)",
           "name": "support.function.library.vivi",
-          "match": "\\b(malloc|free|memcpy|timestamp|traceback|rand|seed|hash|cast)\\b(?=\\s*\\()"
+          "match": "\\b(malloc|free|memcpy|timestamp|traceback|rand|seed|hash|cast|fprintf)\\b(?=\\s*\\()"
         },
         {
           "comment": "Io library: files, stdout/stderr, ANSI helpers",
           "name": "support.function.library.vivi",
-          "match": "\\b(rgb|bold|dim|italic|underline|inverse|red|green|blue|yellow|cyan|bg_red|bg_green|clear_screen|clear_line|cursor_to|cursor_hide|cursor_show|input|read_line|println|printf|eprint|eprintln|eprintf|file_exists|file_lines|file_read|file_write|file_append)\\b(?=\\s*\\()"
+          "match": "\\b(ansi|rgb|bold|dim|italic|underline|inverse|black|red|green|yellow|blue|magenta|cyan|white|gray|bg_red|bg_green|bg_blue|clear_screen|clear_line|cursor_to|cursor_hide|cursor_show|input|read_line|println|printf|eprint|eprintln|eprintf|file_create|file_exists|file_lines|file_read|file_write|file_append)\\b(?=\\s*\\()"
         },
         {
           "comment": "Sys library",
@@ -186,9 +196,19 @@
           "match": "\\b(now|dt|dateTime|getTime|getDay|getMonth|getYear|formatDate)\\b(?=\\s*\\()"
         },
         {
+          "comment": "Time variable",
+          "name": "support.variable.library.vivi",
+          "match": "(?<!\\.)\\b(program_start)\\b"
+        },
+        {
           "comment": "Json library",
           "name": "support.function.library.vivi",
           "match": "\\b(json_parse|json_parse_strict|json_error|json_stringify|json_pretty|json_quote)\\b(?=\\s*\\()"
+        },
+        {
+          "comment": "Toml library (vvtoml)",
+          "name": "support.function.library.vivi",
+          "match": "\\b(toml_parse|toml_parse_strict|toml_error|toml_stringify|toml_quote)\\b(?=\\s*\\()"
         },
         {
           "comment": "Strings library",
@@ -214,7 +234,7 @@
         { "name": "keyword.operator.declaration.vivi", "match": "::|:=" },
         { "name": "keyword.operator.variadic.vivi", "match": "\\.\\.\\." },
         { "name": "keyword.operator.slice.vivi", "match": "\\.\\." },
-        { "name": "keyword.operator.assignment.compound.vivi", "match": "\\+=|-=|\\*=|/=|%=" },
+        { "name": "keyword.operator.assignment.compound.vivi", "match": "\\+=|-=|\\*=|/=|%=|~=" },
         { "name": "keyword.operator.increment.vivi", "match": "\\+\\+|--" },
         { "name": "keyword.operator.comparison.vivi", "match": "==|!=|<=|>=|<(?!<)|>(?!>)" },
         { "name": "keyword.operator.logical.vivi", "match": "&&|\\|\\||!" },

@@ -4,7 +4,7 @@
   "publisher": "JulianKylander",
   "repository": "https://github.com/jkylander/vscode-vivi",
   "description": "Vivi Script",
-  "version": "0.0.7",
+  "version": "0.0.9",
   "icon": "icons/vivi-dark.png",
   "engines": {
     "vscode": "^1.125.0"
@@ -49,6 +49,16 @@
           "items": {
             "type": "string"
           },
+          "vivi.warnMissingImports": {
+          "type": "boolean",
+          "default": true,
+          "description": "Warn when a library function is used without importing its module."
+        },
+          "vivi.autoImport": {
+          "type": "boolean",
+          "default": true,
+          "description": "Suggest functions from modules you have not imported yet, and add the #import line when picked."
+        },
           "default": [],
           "description": "Extra module names to offer when completing #import \"...\"."
         }
